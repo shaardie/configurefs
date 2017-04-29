@@ -49,7 +49,7 @@ class ConfigureFS(fuse.Fuse):
             return - errno.ENOENT
 
         st = MyStat(os.stat(self.src_f))
-        st.st_size = len(self.__parse__().encode('utf-8')) + 1000
+        st.st_size = len(self.__parse__().encode('utf-8'))
 
         return st
 
