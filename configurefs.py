@@ -37,12 +37,12 @@ class ConfigureFS(fuse.Fuse):
 
         fuse.Fuse.__init__(self, *args, **kw)
 
-        self.src_f = src_f
-        with open(src_f) as f:
+        self.src_f = os.path.abspath(os.path.abspath(src_f))
+        with open(self.src_f) as f:
             content = f.read()
         self.template = jinja2.Template(content)
 
-        self.vars_f = vars_f
+        self.vars_f = os.path.abspath(vars_f)
 
     def getattr(self, path):
         if path != "/":
