@@ -1,7 +1,6 @@
 package configurefs
 
 import (
-	"fmt"
 	"time"
 
 	"bazil.org/fuse"
@@ -31,8 +30,5 @@ func statToAttr(stat *unix.Stat_t, attr *fuse.Attr) error {
 func unixStat(name string) (*unix.Stat_t, error) {
 	stat := &unix.Stat_t{}
 	err := unix.Stat(name, stat)
-	if err != nil {
-		return stat, fmt.Errorf("failed to stat %v, %w", name, err)
-	}
-	return stat, nil
+	return stat, err
 }

@@ -2,7 +2,6 @@ package configurefs
 
 import (
 	"context"
-	"fmt"
 	"io/fs"
 	"os"
 	"path"
@@ -46,7 +45,7 @@ func (d Directory) Attr(ctx context.Context, attr *fuse.Attr) error {
 
 	stat, err := unixStat(d.templateDir)
 	if err != nil {
-		return fmt.Errorf("Failed to stat template directory, %w", err)
+		return err
 	}
 
 	return statToAttr(stat, attr)
@@ -71,7 +70,7 @@ func (d Directory) Lookup(ctx context.Context, name string) (fusefs.Node, error)
 	fullname := path.Join(d.templateDir, name)
 	stat, err := unixStat(fullname)
 	if err != nil {
-		return nil, fmt.Errorf("failed to stat %v, %w", fullname, err)
+		return nil, err
 	}
 
 	if stat.Mode&unix.S_IFMT == syscall.S_IFDIR {
@@ -95,7 +94,7 @@ func (d Directory) Lookup(ctx context.Context, name string) (fusefs.Node, error)
 func (d Directory) ReadDirAll(ctx context.Context) ([]fuse.Dirent, error) {
 	templateDirEntries, err := os.ReadDir(d.templateDir)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read template dir %v, %w", d.templateDir, err)
+		return nil, err
 	}
 
 	dirents := make([]fuse.Dirent, 0, len(templateDirEntries))
