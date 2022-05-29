@@ -6,3 +6,5 @@ You can use it for example to template your configuration files and automaticall
 So instead of the need of something like [ansible](https://www.ansible.com/), you can simply change the variables on your system and re-read the configuration file to get the new values.
 
 It was implemented to give a base for simple configurations tools, which now only have to change variables and restart services.
+
+Run `make` to build and take a look at `make setup_test` and `./configurefs -help` to learn how to use it.
